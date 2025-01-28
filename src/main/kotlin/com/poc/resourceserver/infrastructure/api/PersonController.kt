@@ -5,22 +5,24 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/svc/resources/person")
-class PersonController {
+@RequestMapping("/svc/resources/persons")
+class PersonController(
+    private val personAdapter: PersonAdapter,
+) {
 
     @GetMapping
     fun getPersons() : ResponseEntity<List<Person>>{
-        return ResponseEntity.ok(emptyList())
+        return ResponseEntity.ok(personAdapter.getAllPersons())
     }
 
     @GetMapping("/{id}")
     fun getPerson(@PathVariable id: String) : ResponseEntity<Person?>{
-        return ResponseEntity.ok(null)
+        return ResponseEntity.ok(personAdapter.getPersonById(id))
     }
 
     @PostMapping
-    fun createPerson() : ResponseEntity<Person?>{
-        return ResponseEntity.ok(null)
+    fun createPerson(@RequestBody request: PersonCreationRequest) : ResponseEntity<PersonView?>{
+        return ResponseEntity.ok(personAdapter.createPerson(request))
     }
 
     @PutMapping("/{id}")

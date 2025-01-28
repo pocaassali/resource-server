@@ -1,0 +1,36 @@
+package com.poc.resourceserver.infrastructure.persistence.repositories
+
+import com.poc.resourceserver.core.application.ports.output.Persons
+import com.poc.resourceserver.core.domain.model.Person
+import com.poc.resourceserver.infrastructure.persistence.entity.PersonEntity
+
+class InMemoryPersonRepository : Persons {
+    private val persons: MutableMap<Long, PersonEntity> = mutableMapOf(
+        Pair(1L,PersonEntity("uuid1","Alice",51,"FEMALE", setOf("movies"))),
+        Pair(2L,PersonEntity("uuid2","Bob",30,"MALE", setOf("IT","movies"))),
+    )
+
+    override fun save(person: Person): Person {
+        val id = (persons.size+1).toLong()
+        persons[id] = PersonEntity.from(person)
+        return persons[id]?.toPerson() ?: person
+    }
+
+    override fun delete(id: Long) {
+        persons.remove(id)
+        return
+    }
+
+    override fun findById(id: Long): Person? {
+        return persons[id]?.toPerson()
+    }
+
+    override fun findAll(): List<Person> {
+        return persons.map { it.value.toPerson() }
+    }
+
+    override fun update(id: Long, entity: Person): Person? {
+        persons[id] = PersonEntity.from(entity)
+        return persons[id]?.toPerson()
+    }
+}
