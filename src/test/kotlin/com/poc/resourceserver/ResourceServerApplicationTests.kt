@@ -1,4 +1,4 @@
-package com.poc.resource_server
+package com.poc.resourceserver
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

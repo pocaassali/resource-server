@@ -1,4 +1,4 @@
-package com.poc.resource_server
+package com.poc.resourceserver
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
