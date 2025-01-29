@@ -1,5 +1,6 @@
 package com.poc.resourceserver.infrastructure.api
 
+import com.poc.resourceserver.core.application.command.DeletePersonCommand
 import com.poc.resourceserver.core.application.ports.input.PersonApplicationService
 import com.poc.resourceserver.core.application.query.GetPersonByIdQuery
 import com.poc.resourceserver.core.domain.model.Person
@@ -28,12 +29,22 @@ class PersonAdapter(
         return person
     }
 
-    fun deletePerson(id : String) : Person? {
-        return null
+    fun deletePerson(id : String) {
+        if (getPersonById(id).exist()) {
+            personApplicationService.deletePerson(id.toCommand())
+        }
     }
 
     private fun String.toQuery() : GetPersonByIdQuery{
         return GetPersonByIdQuery(UUID.fromString(this))
+    }
+
+    private fun String.toCommand() : DeletePersonCommand{
+        return DeletePersonCommand(UUID.fromString(this))
+    }
+
+    private fun Person?.exist() : Boolean {
+        return this != null
     }
 }
 

@@ -19,9 +19,9 @@ class InMemoryPersonRepository : Persons {
         return persons[id]?.toPerson() ?: person
     }
 
-    override fun delete(id: Long) {
-        persons.remove(id)
-        return
+    override fun delete(id: UUID) {
+        val personToDelete = persons.entries.find { UUID.fromString(it.value.id) == id }
+        personToDelete?.let { persons.remove(it.key) }
     }
 
     override fun findById(id: UUID): Person? {

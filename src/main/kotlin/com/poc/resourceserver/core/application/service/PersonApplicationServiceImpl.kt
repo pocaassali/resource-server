@@ -6,7 +6,6 @@ import com.poc.resourceserver.core.application.command.UpdatePersonCommand
 import com.poc.resourceserver.core.application.ports.input.PersonApplicationService
 import com.poc.resourceserver.core.application.query.GetPersonByIdQuery
 import com.poc.resourceserver.core.domain.model.Person
-import java.util.*
 
 class PersonApplicationServiceImpl(
     private val createPerson: CreatePerson,
@@ -31,7 +30,7 @@ class PersonApplicationServiceImpl(
         return updatePerson.handle(command)
     }
 
-    override fun deletePerson(command: DeletePersonCommand): Person {
-        return deletePerson.handle(command)
+    override fun deletePerson(command: DeletePersonCommand) {
+        deletePerson.handle(command)
     }
 }

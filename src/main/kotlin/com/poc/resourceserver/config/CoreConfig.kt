@@ -32,7 +32,7 @@ class CoreConfig {
     fun updatePerson() = UpdatePerson()
 
     @Bean
-    fun deletePerson() = DeletePerson()
+    fun deletePerson(persons: Persons) = DeletePerson(persons = persons)
 
     @Bean
     fun getAllPersons(

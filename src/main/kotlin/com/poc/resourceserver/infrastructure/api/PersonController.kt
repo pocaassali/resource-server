@@ -31,7 +31,8 @@ class PersonController(
     }
 
     @DeleteMapping("/{id}")
-    fun deletePerson(@PathVariable id: String) : ResponseEntity<Person?>{
-        return ResponseEntity.ok(null)
+    fun deletePerson(@PathVariable id: String) : ResponseEntity<String>{
+        personAdapter.deletePerson(id)
+        return ResponseEntity.ok("Person with id: $id has been deleted !")
     }
 }

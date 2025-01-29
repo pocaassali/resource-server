@@ -11,5 +11,5 @@ interface PersonApplicationService {
     fun getPersonById(query: GetPersonByIdQuery): Person?
     fun createPerson(command: CreatePersonCommand): Person
     fun updatePerson(command: UpdatePersonCommand): Person
-    fun deletePerson(command: DeletePersonCommand): Person
+    fun deletePerson(command: DeletePersonCommand)
 }
