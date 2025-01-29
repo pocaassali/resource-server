@@ -2,7 +2,6 @@ package com.poc.resourceserver.config
 
 import com.poc.resourceserver.core.application.ports.output.Persons
 import com.poc.resourceserver.core.application.service.*
-import org.springframework.cglib.proxy.Mixin.createBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -13,12 +12,14 @@ class CoreConfig {
         createPerson: CreatePerson,
         updatePerson: UpdatePerson,
         deletePerson: DeletePerson,
-        getAllPersons: GetAllPersons
+        getAllPersons: GetAllPersons,
+        getPersonById: GetPersonById,
     ) = PersonApplicationServiceImpl(
         createPerson = createPerson,
         updatePerson = updatePerson,
         deletePerson = deletePerson,
-        getAllPersons = getAllPersons
+        getAllPersons = getAllPersons,
+        getPersonById = getPersonById
     )
 
     @Bean
@@ -34,5 +35,8 @@ class CoreConfig {
     fun getAllPersons(
         persons: Persons
     ) = GetAllPersons(persons = persons)
+
+    @Bean
+    fun getPersonById(persons: Persons) = GetPersonById(persons = persons)
 
 }

@@ -4,6 +4,7 @@ import com.poc.resourceserver.core.application.ports.output.Persons
 import com.poc.resourceserver.core.domain.model.Person
 import com.poc.resourceserver.infrastructure.persistence.entity.PersonEntity
 import org.springframework.stereotype.Repository
+import java.util.UUID
 
 @Repository
 class InMemoryPersonRepository : Persons {
@@ -23,8 +24,8 @@ class InMemoryPersonRepository : Persons {
         return
     }
 
-    override fun findById(id: Long): Person? {
-        return persons[id]?.toPerson()
+    override fun findById(id: UUID): Person? {
+        return persons.values.find { it.id == id.toString() }?.toPerson()
     }
 
     override fun findAll(): List<Person> {

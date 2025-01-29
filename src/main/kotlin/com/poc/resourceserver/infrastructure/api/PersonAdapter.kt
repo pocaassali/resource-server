@@ -1,8 +1,10 @@
 package com.poc.resourceserver.infrastructure.api
 
 import com.poc.resourceserver.core.application.ports.input.PersonApplicationService
+import com.poc.resourceserver.core.application.query.GetPersonByIdQuery
 import com.poc.resourceserver.core.domain.model.Person
 import org.springframework.stereotype.Component
+import java.util.*
 
 @Component
 class PersonAdapter(
@@ -13,7 +15,8 @@ class PersonAdapter(
     }
 
     fun getPersonById(id : String) : Person? {
-        return null
+        val query =  id.toQuery()
+        return personApplicationService.getPersonById(query)
     }
 
     fun createPerson(request: PersonCreationRequest) : PersonView {
@@ -28,4 +31,9 @@ class PersonAdapter(
     fun deletePerson(id : String) : Person? {
         return null
     }
+
+    private fun String.toQuery() : GetPersonByIdQuery{
+        return GetPersonByIdQuery(UUID.fromString(this))
+    }
 }
+
