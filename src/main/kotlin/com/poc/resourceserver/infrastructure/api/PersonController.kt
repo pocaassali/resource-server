@@ -11,7 +11,7 @@ class PersonController(
 ) {
 
     @GetMapping
-    fun getPersons() : ResponseEntity<List<Person>>{
+    fun getPersons() : ResponseEntity<List<PersonView>>{
         return ResponseEntity.ok(personAdapter.getAllPersons())
     }
 

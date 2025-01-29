@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component
 class PersonAdapter(
     private val personApplicationService: PersonApplicationService
 ) {
-    fun getAllPersons() : List<Person> {
-        return emptyList()
+    fun getAllPersons() : List<PersonView> {
+        return personApplicationService.getAllPersons().map { PersonView.from(it) }
     }
 
     fun getPersonById(id : String) : Person? {
