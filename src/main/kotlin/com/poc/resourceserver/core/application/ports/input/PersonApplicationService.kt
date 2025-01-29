@@ -10,6 +10,6 @@ interface PersonApplicationService {
     fun getAllPersons(): List<Person>
     fun getPersonById(query: GetPersonByIdQuery): Person?
     fun createPerson(command: CreatePersonCommand): Person
-    fun updatePerson(command: UpdatePersonCommand): Person
+    fun updatePerson(command: UpdatePersonCommand): Person?
     fun deletePerson(command: DeletePersonCommand)
 }

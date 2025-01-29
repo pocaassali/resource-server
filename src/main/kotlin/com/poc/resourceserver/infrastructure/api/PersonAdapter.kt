@@ -15,9 +15,9 @@ class PersonAdapter(
         return personApplicationService.getAllPersons().map { PersonView.from(it) }
     }
 
-    fun getPersonById(id : String) : Person? {
+    fun getPersonById(id : String) : PersonView? {
         val query =  id.toQuery()
-        return personApplicationService.getPersonById(query)
+        return personApplicationService.getPersonById(query)?.let { PersonView.from(it) }
     }
 
     fun createPerson(request: PersonCreationRequest) : PersonView {
@@ -25,12 +25,15 @@ class PersonAdapter(
         return PersonView.from(personApplicationService.createPerson(command))
     }
 
-    fun updatePerson(person: Person) : Person {
-        return person
+    fun updatePerson(id: String, request: PersonEditionRequest) : PersonView? {
+        if(getPersonById(id).exist()) {
+            return personApplicationService.updatePerson(request.toCommand(id))?.let { PersonView.from(it) }
+        }
+        return null
     }
 
     fun deletePerson(id : String) {
-        if (getPersonById(id).exist()) {
+        if(getPersonById(id).exist()) {
             personApplicationService.deletePerson(id.toCommand())
         }
     }
@@ -43,7 +46,7 @@ class PersonAdapter(
         return DeletePersonCommand(UUID.fromString(this))
     }
 
-    private fun Person?.exist() : Boolean {
+    private fun PersonView?.exist() : Boolean {
         return this != null
     }
 }

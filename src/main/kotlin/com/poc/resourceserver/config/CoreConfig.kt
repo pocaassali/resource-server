@@ -29,7 +29,7 @@ class CoreConfig {
     ) = CreatePerson(persons = persons)
 
     @Bean
-    fun updatePerson() = UpdatePerson()
+    fun updatePerson(persons: Persons) = UpdatePerson(persons = persons)
 
     @Bean
     fun deletePerson(persons: Persons) = DeletePerson(persons = persons)

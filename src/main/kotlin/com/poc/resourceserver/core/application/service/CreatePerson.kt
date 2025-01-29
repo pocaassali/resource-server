@@ -8,7 +8,6 @@ class CreatePerson(
     private val persons: Persons
 ): AbstractCommandHandler<CreatePersonCommand, Person>() {
     override fun execute(command: CreatePersonCommand): Person {
-        val person = command.toPerson()
-        return persons.save(person)
+        return persons.save(command.toPerson())
     }
 }

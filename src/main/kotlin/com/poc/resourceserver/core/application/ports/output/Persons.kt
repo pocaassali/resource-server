@@ -8,5 +8,5 @@ interface Persons {
     fun delete(id: UUID)
     fun findById(id: UUID): Person?
     fun findAll(): List<Person>
-    fun update(id: Long, entity: Person): Person?
+    fun update(person: Person): Person?
 }

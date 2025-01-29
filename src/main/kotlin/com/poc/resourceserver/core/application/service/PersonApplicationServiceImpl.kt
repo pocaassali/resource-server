@@ -26,7 +26,7 @@ class PersonApplicationServiceImpl(
         return createPerson.handle(command)
     }
 
-    override fun updatePerson(command: UpdatePersonCommand): Person {
+    override fun updatePerson(command: UpdatePersonCommand): Person? {
         return updatePerson.handle(command)
     }
 

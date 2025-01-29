@@ -32,8 +32,9 @@ class InMemoryPersonRepository : Persons {
         return persons.map { it.value.toPerson() }
     }
 
-    override fun update(id: Long, entity: Person): Person? {
-        persons[id] = PersonEntity.from(entity)
-        return persons[id]?.toPerson()
+    override fun update(person: Person): Person? {
+        val personToUpdate = persons.entries.find { UUID.fromString(it.value.id) == person.id }
+        personToUpdate?.let { persons[it.key] = PersonEntity.from(person) }
+        return persons[personToUpdate?.key]?.toPerson()
     }
 }

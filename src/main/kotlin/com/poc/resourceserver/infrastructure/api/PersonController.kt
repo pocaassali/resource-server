@@ -16,7 +16,7 @@ class PersonController(
     }
 
     @GetMapping("/{id}")
-    fun getPerson(@PathVariable id: String) : ResponseEntity<Person?>{
+    fun getPerson(@PathVariable id: String) : ResponseEntity<PersonView?>{
         return ResponseEntity.ok(personAdapter.getPersonById(id))
     }
 
@@ -26,8 +26,8 @@ class PersonController(
     }
 
     @PutMapping("/{id}")
-    fun updatePerson(@PathVariable id: String) : ResponseEntity<Person?>{
-        return ResponseEntity.ok(null)
+    fun updatePerson(@PathVariable id: String, @RequestBody request: PersonEditionRequest) : ResponseEntity<PersonView?>{
+        return ResponseEntity.ok(personAdapter.updatePerson(id,request))
     }
 
     @DeleteMapping("/{id}")
