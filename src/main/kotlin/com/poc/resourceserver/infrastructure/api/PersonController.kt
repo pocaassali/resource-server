@@ -2,6 +2,7 @@ package com.poc.resourceserver.infrastructure.api
 
 import com.poc.resourceserver.core.domain.model.Person
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -16,6 +17,7 @@ class PersonController(
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("@securityGuard.hasAdminRole()")
     fun getPerson(@PathVariable id: String) : ResponseEntity<PersonView?>{
         return ResponseEntity.ok(personAdapter.getPersonById(id))
     }

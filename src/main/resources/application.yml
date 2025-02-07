@@ -3,3 +3,5 @@ spring :
     name: resource-server
 server:
   port: 8081
+jwt:
+  secret: ${JWT_SECRET:noSecret}
