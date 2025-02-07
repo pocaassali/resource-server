@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
@@ -28,16 +29,18 @@ class JwtAuthenticationFilter(
 
             try {
                 println("try")
-                if (!jwtUtil.isTokenExpired(token)) {
+                //if (!jwtUtil.isTokenExpired(token)) {
                     val username = jwtUtil.extractUsername(token)
-                    println(username)
-                    val customUserDetails = customUserDetailsService.loadUserByUsername(username)
-                    println(customUserDetails) //userDetails are hardcoded for now
+                    val rolesFromToken = jwtUtil.extractRoles(token)
+                println(rolesFromToken)
+                val authorities = rolesFromToken.map { SimpleGrantedAuthority(it) }
+                    //val customUserDetails = customUserDetailsService.loadUserByUsername(username)
+                    //println(customUserDetails) //userDetails are hardcoded for now
                     val authentication = UsernamePasswordAuthenticationToken(
-                        customUserDetails, null, customUserDetails.authorities
+                        username, null, authorities,
                     )
                     SecurityContextHolder.getContext().authentication = authentication
-                }
+                //}
             } catch (e: Exception) {
                 // Gérer l'exception si nécessaire (par exemple un token invalide ou expiré)
                 response.status = HttpServletResponse.SC_UNAUTHORIZED

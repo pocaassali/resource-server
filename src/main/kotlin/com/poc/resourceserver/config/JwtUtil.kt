@@ -70,6 +70,21 @@ class JwtUtil {
         return extractClaim(token) { it.subject }
     }
 
+    fun extractRoles(token: String): List<String> {
+        return try {
+            val claims = Jwts.parserBuilder()
+                .setSigningKey(getSignKey())
+                .build()
+                .parseClaimsJws(token)
+                .body
+
+            // Extraire les rôles sous forme de liste de String
+            claims["roles"] as? List<String> ?: emptyList()
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
     fun isTokenValid(token: String, userDetails: UserDetails): Boolean {
         val username = extractUsername(token)
         return username == userDetails.username && !isTokenExpired(token)
